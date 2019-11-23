@@ -9,11 +9,10 @@
     <version>0.5.1</version>
     <packaging>jar</packaging>
 
-    <name>Net Ops for Java</name>
+    <name>Thread Ops for Java</name>
     <description>
-        Net Ops for Java is an open source toolkit for implementing non-blocking network clients and servers in
-        Java on top of Java NIO. Net Ops is primarily focused on our own fast, versatile network protocol IAP,
-        but may get some support for other network protocols too.
+        Thread Ops for Java is an open source toolkit providing multithreading tools supporting the implementation
+        of samethreaded, asynchronous, non-blocking IO systems.
     </description>
 
     <url>https://github.com/nanosai/thread-ops-java</url>
