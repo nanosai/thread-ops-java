@@ -63,14 +63,17 @@ public class ThreadLoopPausable {
 
         public void run() {
             while(!isStopping()) {
-                long pauseTime = this.loopCycle.run();
-                if(pauseTime > 0) {
-                    try {
-                        Thread.sleep(pauseTime);
-                    } catch (InterruptedException e) {
-                        //e.printStackTrace();
-                        System.out.println("ThreadLoopPausable failed to pause: " + e.getMessage());
+                long nextExecutionDelay = this.loopCycle.exec();
+                if(nextExecutionDelay > 0) {
+                    long millis = nextExecutionDelay / 1_000_000L;
+                    int  nanos  = (int) (nextExecutionDelay % 1_000_000L);
 
+                    System.out.println("   [sleep time (millis / nanos) = " + millis + " / " + nanos + "]");
+                    try {
+                        Thread.sleep(millis, nanos);
+                    } catch (InterruptedException e) {
+                        System.out.println("ThreadLoopPausable failed to pause: " + e.getMessage());
+                        e.printStackTrace();
                     }
                 }
             }

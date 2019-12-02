@@ -11,12 +11,14 @@ public class ThreadLoop {
         this.loopThread = new Thread(this.loopImpl);
     }
 
-    public synchronized void start() {
+    public synchronized ThreadLoop start() {
         this.loopThread.start();
+        return this;
     }
 
-    public synchronized void stop() {
+    public synchronized ThreadLoop stop() {
         this.loopImpl.stop();
+        return this;
     }
 
     public synchronized boolean isStopping() {

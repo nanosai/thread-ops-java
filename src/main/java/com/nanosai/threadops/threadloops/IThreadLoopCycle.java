@@ -2,7 +2,7 @@ package com.nanosai.threadops.threadloops;
 
 public interface IThreadLoopCycle {
 
-    public long run();
+    public long exec();
 
 
 }
