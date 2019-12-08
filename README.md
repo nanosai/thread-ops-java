@@ -40,7 +40,7 @@ Here are two quick examples:
 
     ThreadLoopPausable threadLoop = new ThreadLoopPausable(() -> {
         System.out.println("Repeated Task");
-        return 500;  //pause 500 milliseconds before next execution
+        return 500;  //pause 500 nanoseconds before next execution
     });
     threadLoop.start();
 
