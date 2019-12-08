@@ -12,7 +12,7 @@ its own thread, and several other thread related tasks.
  - [Thread Loops](#thread-loops)
  - [Repeated Tasks](#repeated-tasks)
  - [One Time Tasks](#one-time-tasks)
- - [One Time Sliced Tasks] (#one-time-sliced-tasks)
+ - [One Time Sliced Tasks](#one-time-sliced-tasks)
  - [Thread Message Ports](#thread-message-ports)
 
 
