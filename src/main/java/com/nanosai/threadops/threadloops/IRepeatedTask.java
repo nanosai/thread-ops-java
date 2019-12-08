@@ -1,8 +1,7 @@
 package com.nanosai.threadops.threadloops;
 
-public interface IThreadLoopCycle {
+public interface IRepeatedTask {
 
     public long exec();
-
 
 }

@@ -6,7 +6,7 @@ public class ThreadLoopPausable {
     private Thread           loopThread = null;
     private LoopImpl         loopImpl   = null;
 
-    public ThreadLoopPausable(IThreadLoopCycle threadLoopCycle) {
+    public ThreadLoopPausable(IRepeatedTask threadLoopCycle) {
         this.loopImpl   = new LoopImpl(threadLoopCycle);
         this.loopThread = new Thread(this.loopImpl);
     }
@@ -55,9 +55,9 @@ public class ThreadLoopPausable {
         private boolean shouldStop = false;
         private boolean isStopped  = false;
 
-        private IThreadLoopCycle loopCycle = null;
+        private IRepeatedTask loopCycle = null;
 
-        public LoopImpl(IThreadLoopCycle loopCycle) {
+        public LoopImpl(IRepeatedTask loopCycle) {
             this.loopCycle = loopCycle;
         }
 

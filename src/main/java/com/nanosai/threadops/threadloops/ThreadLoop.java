@@ -6,8 +6,8 @@ public class ThreadLoop {
     private Thread   loopThread = null;
     private LoopImpl loopImpl   = null;
 
-    public ThreadLoop(Runnable threadLoopCycle) {
-        this.loopImpl   = new LoopImpl(threadLoopCycle);
+    public ThreadLoop(Runnable repeatedTask) {
+        this.loopImpl   = new LoopImpl(repeatedTask);
         this.loopThread = new Thread(this.loopImpl);
     }
 
