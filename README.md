@@ -60,7 +60,7 @@ Repeated tasks can be executed by an RepeatedTaskExecutorPausable (which is itse
 the task for an amount of nano-seconds decided by the repeated task. Here is how that looks:
 
     RepeatedTaskExecutorPausable executor = new RepeatedTaskExecutorPausable(
-             () -> { System.out.println("Blabla"); return 1_000_000_000; }
+             () -> { System.out.println("First"); return 1_000_000_000; }
             ,() -> { System.out.println("Second"); return   400_000_000; }
             );
 
@@ -71,9 +71,15 @@ the task for an amount of nano-seconds decided by the repeated task. Here is how
 <a name="one-time-tasks"></a>
 ## One Time Tasks
 A one time task is a task that is executed just one time - typically as a response to e.g. an incoming message
-from a client (over the network) etc.
+from a client (over the network) etc. One time tasks are typically executed by a repeated task which has detected
+the need to execute this one time task. For instance, in response to an incoming request the repeated task read from
+a client socket, or a file found in a directory, or a time period that has passed etc.
 
-There is currently no one time task execution mechanism, but you can always just execute a task immediately yourself.
+There is currently no one time task execution mechanism, but you can always just execute a task immediately yourself
+from inside the repeated task. We might implement a "fair" one time task executor, which can execute one time tasks
+from different "lanes" (e.g. from different network clients) in a round robin fashion, to avoid one "lane" (e.g. client)
+submitting a large amount of tasks which other "lanes" (e.g. clients) have to wait for before their own tasks gets
+executed.
 
 
 
