@@ -49,15 +49,23 @@ Here are two quick examples:
 <a name="repeated-tasks"></a>
 ## Repeated Tasks
 Repeated tasks are tasks that are repeated over and over again for as long as the application is running.
-This will typically be tasks like check if there is any new inbound data to read from a non-blocking socket (NIO),
+This will typically be tasks like - check if there is any new inbound data to read from a non-blocking socket (NIO),
 or any data to write, or any other kind of task your application needs to repeat on a regular basis.
 
 Repeated tasks are typically executed inside a thread loop. A ThreadLoop can execute a single IRepeatedTask
 repeatedly in its loop. However, Thread Ops comes with IRepeatedTask implementations which can themselves execute
 multiple IRepeatedTasks, so you can execute more than one IRepeatedTask inside the same ThreadLoop.
 
-Repeated tasks can be executed by an executor that can pause the task for an amount of nano-seconds decided by
-the repeated task.
+Repeated tasks can be executed by an RepeatedTaskExecutorPausable (which is itself an IRepeatedTask impl) that can pause
+the task for an amount of nano-seconds decided by the repeated task. Here is how that looks:
+
+    RepeatedTaskExecutorPausable executor = new RepeatedTaskExecutorPausable(
+             () -> { System.out.println("Blabla"); return 1_000_000_000; }
+            ,() -> { System.out.println("Second"); return   400_000_000; }
+            );
+
+    ThreadLoopPausable threadLoop = new ThreadLoopPausable(executor);
+    threadLoop.start();
 
 
 <a name="one-time-tasks"></a>

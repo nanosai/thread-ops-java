@@ -1,9 +1,9 @@
 package com.nanosai.threadops.threadloops;
 
-public class RepeatedTaskExecutorPausable {
+public class RepeatedTaskExecutorPausable implements IRepeatedTask {
 
     private IRepeatedTask[] proactors                   = null;
-    private long[]      proactorsExecutionTimeNanos = null;
+    private long[]          proactorsExecutionTimeNanos = null;
 
 
     public RepeatedTaskExecutorPausable(IRepeatedTask... proactors) {

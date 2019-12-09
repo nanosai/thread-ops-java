@@ -6,8 +6,8 @@ public class ThreadLoopPausable {
     private Thread           loopThread = null;
     private LoopImpl         loopImpl   = null;
 
-    public ThreadLoopPausable(IRepeatedTask threadLoopCycle) {
-        this.loopImpl   = new LoopImpl(threadLoopCycle);
+    public ThreadLoopPausable(IRepeatedTask repeatedTask) {
+        this.loopImpl   = new LoopImpl(repeatedTask);
         this.loopThread = new Thread(this.loopImpl);
     }
 
@@ -68,7 +68,7 @@ public class ThreadLoopPausable {
                     long millis = nextExecutionDelay / 1_000_000L;
                     int  nanos  = (int) (nextExecutionDelay % 1_000_000L);
 
-                    System.out.println("   [sleep time (millis / nanos) = " + millis + " / " + nanos + "]");
+                    //System.out.println("   [sleep time (millis / nanos) = " + millis + " / " + nanos + "]");
                     try {
                         Thread.sleep(millis, nanos);
                     } catch (InterruptedException e) {
