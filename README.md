@@ -1,5 +1,10 @@
 # Thread Ops for Java
 
+ - [Tools](#thread-loops)
+ - [Maven Dependency](#maven-dependency)
+ - [Version History](#version-history)
+ 
+
 Thread Ops for Java is an open source toolkit providing multithreading tools to support the implementation
 of samethreaded, asynchronous, non-blocking IO distributed systems.
 
