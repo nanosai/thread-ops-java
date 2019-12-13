@@ -120,3 +120,29 @@ Thread Ops does not yet have a sliced task executor, but it's planned and design
 A Thread message port is a port through which different threads can exchange messages, similarly to a network connection.
 
 Thread Ops does not yet have a thread message port, but we have planned to implement one.
+
+
+
+
+<a name="maven-dependency"></a>
+# Maven Dependency
+
+If you want to use Thread Ops with Maven, the Maven dependency for Thread Ops looks like this:
+
+    <dependency>
+        <groupId>com.nanosai</groupId>
+        <artifactId>thread-ops</artifactId>
+        <version>0.6.0</version>
+    </dependency>
+
+Remember to substitute the version with the version of Thread Ops you want to use. See the Thread Ops version history in
+the next section.
+
+
+
+<a name="version-history"></a>
+# Version History
+
+| Version | Java Version | Change |
+|---------|--------------|--------|
+| 0.6.0   | Java 8       | First basic version  |
