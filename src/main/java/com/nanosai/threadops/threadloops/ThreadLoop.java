@@ -6,7 +6,7 @@ public class ThreadLoop {
     private Thread   loopThread = null;
     private LoopImpl loopImpl   = null;
 
-    public ThreadLoop(Runnable repeatedTask) {
+    public ThreadLoop(IRepeatedTask repeatedTask) {
         this.loopImpl   = new LoopImpl(repeatedTask);
         this.loopThread = new Thread(this.loopImpl);
     }
@@ -56,15 +56,15 @@ public class ThreadLoop {
         private boolean shouldStop = false;
         private boolean isStopped  = false;
 
-        private Runnable loopCycle = null;
+        private IRepeatedTask loopCycle = null;
 
-        public LoopImpl(Runnable loopCycle) {
+        public LoopImpl(IRepeatedTask loopCycle) {
             this.loopCycle = loopCycle;
         }
 
         public void run() {
             while(!isStopping()) {
-                this.loopCycle.run();
+                this.loopCycle.exec();
             }
             synchronized(this) {
                 isStopped = true;

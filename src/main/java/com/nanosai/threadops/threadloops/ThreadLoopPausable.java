@@ -6,7 +6,7 @@ public class ThreadLoopPausable {
     private Thread           loopThread = null;
     private LoopImpl         loopImpl   = null;
 
-    public ThreadLoopPausable(IRepeatedTask repeatedTask) {
+    public ThreadLoopPausable(IRepeatedTaskPausable repeatedTask) {
         this.loopImpl   = new LoopImpl(repeatedTask);
         this.loopThread = new Thread(this.loopImpl);
     }
@@ -55,15 +55,15 @@ public class ThreadLoopPausable {
         private boolean shouldStop = false;
         private boolean isStopped  = false;
 
-        private IRepeatedTask loopCycle = null;
+        private IRepeatedTaskPausable repeatedTaskPausable = null;
 
-        public LoopImpl(IRepeatedTask loopCycle) {
-            this.loopCycle = loopCycle;
+        public LoopImpl(IRepeatedTaskPausable repeatedTaskPausable) {
+            this.repeatedTaskPausable = repeatedTaskPausable;
         }
 
         public void run() {
             while(!isStopping()) {
-                long nextExecutionDelay = this.loopCycle.exec();
+                long nextExecutionDelay = this.repeatedTaskPausable.exec();
                 if(nextExecutionDelay > 0) {
                     long millis = nextExecutionDelay / 1_000_000L;
                     int  nanos  = (int) (nextExecutionDelay % 1_000_000L);
@@ -82,7 +82,7 @@ public class ThreadLoopPausable {
             }
         }
 
-        public synchronized void stop() {
+        public synchronized void    stop() {
             this.shouldStop = true;
         }
 

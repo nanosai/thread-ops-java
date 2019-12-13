@@ -1,32 +1,32 @@
 package com.nanosai.threadops.threadloops;
 
-public class RepeatedTaskExecutorPausable implements IRepeatedTask {
+public class RepeatedTaskExecutorPausable implements IRepeatedTaskPausable {
 
-    private IRepeatedTask[] proactors                   = null;
-    private long[]          proactorsExecutionTimeNanos = null;
+    private IRepeatedTaskPausable[] repeatedTasks = null;
+    private long[] repeatedTasksNextExecutionTimes = null;
 
 
-    public RepeatedTaskExecutorPausable(IRepeatedTask... proactors) {
-        this.proactors = proactors;
-        this.proactorsExecutionTimeNanos = new long[this.proactors.length];
+    public RepeatedTaskExecutorPausable(IRepeatedTaskPausable ... repeatedTasks) {
+        this.repeatedTasks = repeatedTasks;
+        this.repeatedTasksNextExecutionTimes = new long[this.repeatedTasks.length];
     }
 
 
     public long exec() {
         long timeNanos = System.nanoTime();
-        for(int i=0; i < proactorsExecutionTimeNanos.length; i++) {
-            if(timeNanos > this.proactorsExecutionTimeNanos[i]){
-                long nextExecutionDelay = this.proactors[i].exec();
+        for(int i = 0; i < repeatedTasksNextExecutionTimes.length; i++) {
+            if(timeNanos > this.repeatedTasksNextExecutionTimes[i]){
+                long nextExecutionDelay = this.repeatedTasks[i].exec();
                 timeNanos = System.nanoTime();
-                this.proactorsExecutionTimeNanos[i] = timeNanos + nextExecutionDelay;
+                this.repeatedTasksNextExecutionTimes[i] = timeNanos + nextExecutionDelay;
             }
         }
 
         //calculate delay until next iteration
         long earliestExecutionTimeNanos = Long.MAX_VALUE;
-        for(int i=0; i < proactorsExecutionTimeNanos.length; i++) {
-            if(proactorsExecutionTimeNanos[i] < earliestExecutionTimeNanos){
-                earliestExecutionTimeNanos = proactorsExecutionTimeNanos[i];
+        for(int i = 0; i < repeatedTasksNextExecutionTimes.length; i++) {
+            if(repeatedTasksNextExecutionTimes[i] < earliestExecutionTimeNanos){
+                earliestExecutionTimeNanos = repeatedTasksNextExecutionTimes[i];
             }
         }
         long nextExecutionDelay = earliestExecutionTimeNanos - System.nanoTime();

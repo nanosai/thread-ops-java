@@ -52,15 +52,35 @@ Repeated tasks are tasks that are repeated over and over again for as long as th
 This will typically be tasks like - check if there is any new inbound data to read from a non-blocking socket (NIO),
 or any data to write, or any other kind of task your application needs to repeat on a regular basis.
 
-Repeated tasks are typically executed inside a thread loop. A ThreadLoop can execute a single IRepeatedTask
-repeatedly in its loop. However, Thread Ops comes with IRepeatedTask implementations which can themselves execute
-multiple IRepeatedTasks, so you can execute more than one IRepeatedTask inside the same ThreadLoop.
+Thread Ops has the following types of repeated tasks:
 
-Repeated tasks can be executed by an RepeatedTaskExecutorPausable (which is itself an IRepeatedTask impl) that can pause
-the task for an amount of nano-seconds decided by the repeated task. Here is how that looks:
+ - IRepeatedTask
+ - IRepeatedTaskPausable
+
+An IRepeatedTask implementation cannot be paused. It is simply executed over and over again in a tight loop.
+An IRepeatedTaskPausable can return a number of nanoseconds it would like to be paused before next execution.
+
+Repeated tasks are typically executed inside a thread loop. A ThreadLoop can execute a single IRepeatedTask
+repeatedly in its loop. A ThreadLoopPausable can execute a single IRepeatedTaskPausable repeatedly in a loop.
+
+Since ThreadLoop and ThreadLoopPausable can only execute a single IRepeatedTask or IRepeatedTask Pausable,
+Thread Ops comes with IRepeatedTask and IRepeatedTaskPausable implementations which can themselves execute
+multiple IRepeatedTask or IRepeatedTaskPausable instances. That way you can execute more than one IRepeatedTask inside the same ThreadLoop,
+or execute more than one IRepeatedTaskPausable inside a ThreadLoopPausable.
+
+Here are two examples of using RepeatedTaskExecutor and RepeatedTaskExecutorPausable:
+
+    RepeatedTaskExecutor executor = new RepeatedTaskExecutor(
+             () -> { System.out.println("First"); }
+            ,() -> { System.out.println("Second");}
+            );
+
+    ThreadLoop threadLoop = new ThreadLoop(executor);
+    threadLoop.start();
+
 
     RepeatedTaskExecutorPausable executor = new RepeatedTaskExecutorPausable(
-             () -> { System.out.println("First"); return 1_000_000_000; }
+             () -> { System.out.println("First");  return 1_000_000_000; }
             ,() -> { System.out.println("Second"); return   400_000_000; }
             );
 
