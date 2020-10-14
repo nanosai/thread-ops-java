@@ -14,7 +14,7 @@ public class MainTest {
     }
 
     private static void testThreadLoopPausable() throws InterruptedException {
-        ThreadLoopPausable thread = new ThreadLoopPausable(() -> {
+        ThreadLoopPausable thread = new ThreadLoopPausable((threadLoop) -> () -> {
             System.out.println("Running");
             return 500;
         });
@@ -28,7 +28,7 @@ public class MainTest {
     }
 
     private static void testThreadLoop() throws InterruptedException {
-        ThreadLoop thread = new ThreadLoop(() -> {
+        ThreadLoop thread = new ThreadLoop((threadLoop) -> () -> {
             System.out.println("Running");
         });
         thread.start();
