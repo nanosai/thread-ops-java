@@ -6,6 +6,8 @@ public interface ITask {
 
     public boolean isComplete();
 
+    public int getStatus();
+
     public int getTotalWork();
 
     public int getCompletedWork();

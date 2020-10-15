@@ -21,6 +21,11 @@ public class MockTask implements ITask {
     }
 
     @Override
+    public int getStatus() {
+        return 0;
+    }
+
+    @Override
     public int getTotalWork() {
         return this.slicesInTotal;
     }
